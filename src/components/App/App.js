@@ -75,13 +75,13 @@ class App extends Component {
 									</span>
 								</p>
 								<p>
-									<b>Name: </b>{' '}
+									<b>Role: </b>{' '}
 									<span className='text text-primary'>
 										{this.state.activeUser.role}
 									</span>
 								</p>
 								<p>
-									<b>Name: </b>{' '}
+									<b>Email: </b>{' '}
 									<span className='text text-primary'>
 										{this.state.activeUser.email}
 									</span>
