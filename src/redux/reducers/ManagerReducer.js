@@ -1,4 +1,3 @@
-// import getManagersListReducers from '../actions/ManagerActions';
 import { FETCH_MANAGERS } from '../constants/constants';
 
 const initialState = {

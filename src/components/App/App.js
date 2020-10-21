@@ -4,58 +4,49 @@ import Managers from '../Managers/Managers';
 import TechLeads from '../TechLeads/TechLeads';
 import Employees from '../Employees/Employees';
 import { connect } from 'react-redux';
-import getManagersListAction from '../../redux/actions/ManagerActions';
+import { getManagersListAction } from '../../redux/actions/ManagerActions';
+import { getTechLeadsListAction } from '../../redux/actions/TechLeadActions';
+import { getEmployeesListAction } from '../../redux/actions/EmployeeActions';
 
 const mapStateToProps = state => {
-	// console.log('State: ', state);
 	return {
-		managers: state.managers
+		managers: state.getManagersListReducers.managers,
+		techLeads: state.getTechLeadsListReducers.techLeads,
+		employees: state.getEmployeessListReducers.employees
 	};
 };
-
-const mapDispatchToProps = dispatch => ({
-	fetManagers: d => dispatch(getManagersListAction(d))
-});
 
 class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			activeUser: {},
-			data: {}
+			activeUser: {}
 		};
 	}
 
 	componentDidMount() {
-		console.log('props', this);
-		this.props.fetManagers(managers);
-		// this.setState({
-		// 	data: {
-		// 		employees,
-		// 		techLeads,
-		// 		managers
-		// 	}
-		// });
+		this.props.getManagersListAction(managers);
+		this.props.getTechLeadsListAction(techLeads);
+		this.props.getEmployeesListAction(employees);
 	}
 
 	handleCurrentUser = user => this.setState({ activeUser: user });
 
 	render() {
-		// console.log('Props: ', this.props);
 		return (
 			<div className='container-fluid' style={{ marginTop: 20 }}>
 				<div className='row'>
 					<div className='col-sm-8'>
 						<Managers
-							managers={this.state.data.managers}
+							managers={this.props.managers}
 							handler={this.handleCurrentUser}
 						/>
 						<TechLeads
-							techLeads={this.state.data.techLeads}
+							techLeads={this.props.techLeads}
 							handler={this.handleCurrentUser}
 						/>
 						<Employees
-							employees={this.state.data.employees}
+							employees={this.props.employees}
 							handler={this.handleCurrentUser}
 						/>
 					</div>
@@ -104,4 +95,8 @@ class App extends Component {
 	}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, {
+	getManagersListAction,
+	getTechLeadsListAction,
+	getEmployeesListAction
+})(App);
