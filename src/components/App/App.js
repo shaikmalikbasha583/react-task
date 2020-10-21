@@ -3,6 +3,19 @@ import { employees, techLeads, managers } from '../../data/dummyData';
 import Managers from '../Managers/Managers';
 import TechLeads from '../TechLeads/TechLeads';
 import Employees from '../Employees/Employees';
+import { connect } from 'react-redux';
+import getManagersListAction from '../../redux/actions/ManagerActions';
+
+const mapStateToProps = state => {
+	// console.log('State: ', state);
+	return {
+		managers: state.managers
+	};
+};
+
+const mapDispatchToProps = dispatch => ({
+	fetManagers: d => dispatch(getManagersListAction(d))
+});
 
 class App extends Component {
 	constructor(props) {
@@ -14,18 +27,21 @@ class App extends Component {
 	}
 
 	componentDidMount() {
-		this.setState({
-			data: {
-				employees,
-				techLeads,
-				managers
-			}
-		});
+		console.log('props', this);
+		this.props.fetManagers(managers);
+		// this.setState({
+		// 	data: {
+		// 		employees,
+		// 		techLeads,
+		// 		managers
+		// 	}
+		// });
 	}
 
 	handleCurrentUser = user => this.setState({ activeUser: user });
 
 	render() {
+		// console.log('Props: ', this.props);
 		return (
 			<div className='container-fluid' style={{ marginTop: 20 }}>
 				<div className='row'>
@@ -88,4 +104,4 @@ class App extends Component {
 	}
 }
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);
